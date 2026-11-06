@@ -25,6 +25,16 @@ if(!reducedMotion.matches && 'IntersectionObserver' in window){
  const revealObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{
   if(entry.isIntersecting){entry.target.animate([{opacity:0,transform:'translateY(18px)'},{opacity:1,transform:'translateY(0)'}],{duration:650,easing:'cubic-bezier(.22,1,.36,1)'});revealObserver.unobserve(entry.target)}
  }),{threshold:.15});
- document.querySelectorAll('h1,h2,.large-copy,.section-heading>p').forEach(el=>revealObserver.observe(el));
+ document.querySelectorAll('h2,.large-copy,.section-heading>p').forEach(el=>revealObserver.observe(el));
  reducedMotion.addEventListener('change',()=>{if(reducedMotion.matches){revealObserver.disconnect();document.getAnimations().forEach(a=>a.finish())}});
 }
+
+const menuButton=document.querySelector('.menu-toggle');
+function closeMenu(){siteHeader.classList.remove('menu-open');menuButton.setAttribute('aria-expanded','false');menuButton.setAttribute('aria-label','Open navigation')}
+menuButton.addEventListener('click',()=>{const open=menuButton.getAttribute('aria-expanded')!=='true';siteHeader.classList.toggle('menu-open',open);menuButton.setAttribute('aria-expanded',String(open));menuButton.setAttribute('aria-label',open?'Close navigation':'Open navigation')});
+document.querySelectorAll('#site-nav a').forEach(a=>a.addEventListener('click',closeMenu));
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&menuButton.getAttribute('aria-expanded')==='true'){closeMenu();menuButton.focus()}});
+document.addEventListener('click',e=>{if(!siteHeader.contains(e.target))closeMenu()});
+const progress=document.querySelector('.scroll-progress');let progressPending=false;
+function updateProgress(){const available=document.documentElement.scrollHeight-window.innerHeight;progress.style.transform='scaleX('+Math.max(0,Math.min(1,available>0?window.scrollY/available:0))+')';progressPending=false}
+window.addEventListener('scroll',()=>{if(!progressPending){progressPending=true;requestAnimationFrame(updateProgress)}},{passive:true});window.addEventListener('resize',()=>{updateProgress();if(window.innerWidth>700)closeMenu()});window.addEventListener('load',updateProgress);updateProgress();
