@@ -29,3 +29,10 @@ header{position:sticky;top:16px;z-index:20;width:calc(100% - 64px);max-width:132
 .about .resume-button{margin-top:28px;border:1px solid #aeb79d;background:#ffffff50}.about .resume-button:hover{background:#ffffff90}.contact-actions{flex-wrap:wrap}.phone-link{font-size:14px;color:#3c4831;border-bottom:1px solid #aab597;padding-bottom:4px;white-space:nowrap}@media(max-width:700px){.phone-link{font-size:12px}}
 
 button.phone-link{background:transparent;border:0;border-bottom:1px solid #aab597;padding:0 0 4px;cursor:pointer}
+
+
+/* Refreshed portrait and restrained interaction details. */
+.hero-portrait{background:#e5e6e8}.hero-portrait img{object-position:50% 35%}
+.project-visual{transition:transform .35s ease,box-shadow .35s ease}.project-card:hover .project-visual{transform:translateY(-4px);box-shadow:0 14px 30px #29332012}
+a:focus-visible,button:focus-visible{outline:2px solid #617d30;outline-offset:5px}
+@media(prefers-reduced-motion:reduce){.project-card:hover .project-visual{transform:none}}
